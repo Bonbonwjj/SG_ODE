@@ -13,7 +13,7 @@ from matplotlib.pyplot import savefig
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
-from annotations_only_spatial_rp import build_vocab,get_info
+from annotations import build_vocab,get_info
 from dataset_build import AGDataset
 from model import sgODE_model,Discriminator,compute_losses
 from utils import imagenet_deprocess_batch
@@ -142,14 +142,6 @@ def main(args):
     step=0
     train_num=0
 
-    G_losses = []
-    D_losses = []
-
-    G_losses_avg = []
-    D_losses_avg = []
-
-    G_losses_avg1 = []
-    D_losses_avg1 = []
 
     for epoch in range(args.nepoch):
 
@@ -161,6 +153,15 @@ def main(args):
 
         #for video in range(0,len(video_info)):
         for video in range(0,len(video_info)):
+
+            G_losses = []
+            D_losses = []
+
+            G_losses_avg = []
+            D_losses_avg = []
+
+            G_losses_avg1 = []
+            D_losses_avg1 = []
 
             # if video>=args.video_num_iterations:
             #     break
@@ -330,13 +331,21 @@ def main(args):
 
             save_checkpoint(checkpoint, args, epoch)
 
-    plt.title("Generator and Discriminator Loss During Training per 1000 steps")
-    plt.plot(G_losses_avg1, label="G")
-    plt.plot(D_losses_avg1, label="D")
-    plt.xlabel("Key_Frames_Num")
-    plt.ylabel("Loss")
-    plt.legend()
-    savefig(args.savefig_path + 'loss1000_time_from_0_epoch%d.jpg' % epoch)
+        plt.title("Generator and Discriminator Loss During Training per 100 steps")
+        plt.plot(G_losses_avg, label="G")
+        plt.plot(D_losses_avg, label="D")
+        plt.xlabel("Key_Frames_Num")
+        plt.ylabel("Loss")
+        plt.legend()
+        savefig(args.savefig_path + 'loss100_time_from_0_epoch%d.jpg' % epoch)
+
+        plt.title("Generator and Discriminator Loss During Training per 1000 steps")
+        plt.plot(G_losses_avg1, label="G")
+        plt.plot(D_losses_avg1, label="D")
+        plt.xlabel("Key_Frames_Num")
+        plt.ylabel("Loss")
+        plt.legend()
+        savefig(args.savefig_path + 'loss1000_time_from_0_epoch%d.jpg' % epoch)
 
 
 if __name__ == '__main__':
