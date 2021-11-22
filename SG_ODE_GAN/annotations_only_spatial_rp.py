@@ -109,9 +109,9 @@ def get_info(annotations_path,nonperson_filter=True,vocab=None):
                     kf_info[id]['relationship'].append(
                         vocab['relationship_classes_nti'][object['spatial_relationship'][0].replace('_','')])
 
-                elif not object['spatial_relationship'] and object['contacting_relationship']:
-                    kf_info[id]['relationship'].append(
-                        vocab['relationship_classes_nti'][object['contacting_relationship'][0].replace('_', '')])
+                # elif not object['spatial_relationship'] and object['contacting_relationship']:
+                #     kf_info[id]['relationship'].append(
+                #         vocab['relationship_classes_nti'][object['contacting_relationship'][0].replace('_', '')])
                 else:
                     kf_info[id]['relationship'].append(0)
 
